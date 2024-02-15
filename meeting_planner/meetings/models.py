@@ -4,8 +4,11 @@ from datetime import time
 
 class Room(models.Model):
     name = models.CharField(max_length=100)
-    floor_number = models.IntegerField(default=0)
-    room_number = models.IntegerField(default=0)
+    floor_number = models.IntegerField()
+    room_number = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.name}: room on floor {self.floor_number} with number {self.room_number}"
 
 
 class Meeting(models.Model):
@@ -13,7 +16,8 @@ class Meeting(models.Model):
     date = models.DateField()
     start_time = models.TimeField(default=time(9))
     duration = models.IntegerField(default=1)
-    room = forei
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+
     def __str__(self):
         return f"{self.title} start at {self.start_time} it will take {self.duration} at {self.date}"
 
